@@ -1,12 +1,25 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition :name="transitionName">
+      <keep-alive v-if="$route.meta.keepAlive">
+        <router-view class="router"></router-view>
+      </keep-alive>
+      <router-view class="router" v-else></router-view>
+    </transition>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'app',
+  computed: {
+    transitionName () {
+       return this.$store.state.direction
+       //return ''
+    }
+  }
+}
+</script>
 
 <style lang="less">
 #app {
