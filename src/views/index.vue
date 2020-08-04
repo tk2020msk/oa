@@ -6,15 +6,13 @@
                 <div>{{item.title}}</div>
             </div>
         </div>
-        <van-button type="primary">主要按钮</van-button>
     </div>
 </template>
 
 <script>
-import {Button,Icon} from 'vant';
+import {Icon} from 'vant';
 export default {
     components:{
-        [Button.name]:Button,
         [Icon.name]:Icon
     },
     data(){
@@ -29,6 +27,11 @@ export default {
                     title:'亲属回避',
                     icon:'friends',
                     path:'/kinship'
+                },
+                {
+                    title:'访客预约',
+                    icon:'friends',
+                    path:'/addvisit'
                 }
             ]
         }
@@ -51,6 +54,7 @@ export default {
         .item{
           width:25%;
           margin-bottom: 20px;
+          text-align: center;
         }
     }
 </style>
