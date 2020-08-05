@@ -11,14 +11,13 @@
 
 <script>
 export default {
-  name: 'app',
+  name: "app",
   computed: {
-    transitionName () {
-       return this.$store.state.direction
-       //return ''
+    transitionName() {
+      return this.$store.state.direction;
     }
   }
-}
+};
 </script>
 
 <style lang="less">

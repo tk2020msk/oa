@@ -1,14 +1,11 @@
 import axios from 'axios'
 import { Toast } from 'vant'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
 const BASELINK = "/sars";
 
 
 //过滤请求
 axios.interceptors.request.use(
   config => {
-    config.headers["token"] = getToken();
     config.timeout = 10000;
     return config;
   },
@@ -24,16 +21,15 @@ axios.interceptors.response.use(
       return Promise.resolve(res);
     }else{
       Toast.fail({
-        message: res.message,
+        message: res.errmsg,
         duration: 1.5 * 1000
       })
       return Promise.reject(res);
     }
-
   },
   error => {
     Toast.fail({
-      message: error.message,
+      message: error.errmsg,
       duration: 1.5 * 1000
     })
     return Promise.reject(error)

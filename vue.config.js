@@ -4,9 +4,9 @@ const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
 const name = 'H5Vue' // page title
 const proxyUrl = {
-  qa:'https://openapi.qa.ixiancheng.com',
-  stage:'https://openapi.stage.ixiancheng.com',
-  prod:'https://openapi.ixiancheng.com'
+  qa:'https://xcoaapi.qa.xianchengkeji.cn',
+  stage:'https://xcoaapi.stage.xianchengkeji.cn',
+  prod:'https://xcoaapi.xianchengkeji.cn'
 }[process.env.VUE_APP_ENV];
 
 // 记录打包速度

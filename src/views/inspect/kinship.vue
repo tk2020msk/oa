@@ -156,7 +156,7 @@ export default {
       this.getBookList();
     },
     jumpSearch(){
-      this.$router.push({path:'/search'});
+      this.$router.push({path:'/kinship/search'});
     }
   },
   mounted() {

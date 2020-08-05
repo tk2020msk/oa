@@ -5,17 +5,7 @@ export default [
         meta: {
           title: '亲属回避',
           keepAlive: false
-        },
-        // children:[
-        //   {
-        //     path: 'search',
-        //     component: ()=>import('../views/inspect/search.vue'),
-        //     meta:{
-        //       title: '亲属回避',
-        //       keepAlive: false
-        //     }
-        //   }
-        // ]
+        }
     },
     {
         path:'/present',
@@ -26,7 +16,7 @@ export default [
         }
     },
     {
-        path: '/search',
+        path: '/kinship/search',
         component: ()=>import('../views/inspect/search.vue'),
         meta:{
             title: '亲属回避',

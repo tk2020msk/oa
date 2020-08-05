@@ -5,22 +5,14 @@ export default [
         meta: {
           title: '访客预约',
           keepAlive: false
-        },
-        children:[{
-            path:'detail',
-            component:()=>import('../views/addvisit/detail.vue'),
-            meta: {
-              title: '访客预约',
-              keepAlive: false
-            }
-        }]
+        }
+    },
+    {
+        path:'/addvisit/detail',
+        component:()=>import('../views/addvisit/detail.vue'),
+        meta: {
+          title: '访客预约',
+          keepAlive: false
+        }
     }
-    // {
-    //     path:'/visitdetail',
-    //     component:()=>import('../views/addvisit/detail.vue'),
-    //     meta: {
-    //       title: '访客预约',
-    //       keepAlive: false
-    //     }
-    // },
 ]
