@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
-import {getUserInfoByCode} from '@/api/common';
 
 Vue.use(Vuex);
 
@@ -13,31 +12,41 @@ files.keys().forEach(key => {
 })
 
 
-const vuexPersisted = new createPersistedState({
-  key: 'TcshOaState',
-  storage: window.sessionStorage, 
+const visitPersisted = new createPersistedState({
+  key: 'visitState',
+  storage: window.sessionStorage,
   reducer: state => ({
-    editVisitId:state.addvisit.editId
+    currentBar: state.addvisit.currentBar,
+    visitId: state.addvisit.visitId,
+    visitType: state.addvisit.visitType
+  })
+})
+
+const commonPersisted = new createPersistedState({
+  key: 'commonState',
+  storage: window.sessionStorage,
+  reducer: state => ({
+    jobNumber: state.jobNumber
   })
 })
 
 export default new Vuex.Store({
   state: {
     direction: 'forward', // 页面切换方向
-    jobNumber:'' //工号
+    jobNumber: '', //工号
   },
   mutations: {
     // 更新页面切换方向
-    updateDirection (state, direction) {
+    updateDirection(state, direction) {
       state.direction = direction
     },
-    merge(state,payLoad){
-      Object.assign(state,payLoad);
+    merge(state, payLoad) {
+      Object.assign(state, payLoad);
     }
   },
   actions: {
-   
+
   },
   modules,
-  plugins:[vuexPersisted]
+  plugins: [visitPersisted, commonPersisted]
 })

@@ -4,12 +4,12 @@ import Home from '../views/index.vue'
 
 Vue.use(VueRouter)
 
-  let routes = [
+let routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    meta:{
+    meta: {
       title: '首页',
       keepAlive: true
     }
@@ -47,7 +47,16 @@ routes = routes.concat({
 const createRouter = () => new VueRouter({
   mode: 'history', // require service support
   base: process.env.BASE_URL,
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop;
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 };
+    }
+  },
   routes
 })
 

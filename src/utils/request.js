@@ -21,7 +21,7 @@ axios.interceptors.response.use(
       return Promise.resolve(res);
     }else{
       Toast.fail({
-        message: res.errmsg,
+        message: res.message,
         duration: 1.5 * 1000
       })
       return Promise.reject(res);
@@ -29,10 +29,10 @@ axios.interceptors.response.use(
   },
   error => {
     Toast.fail({
-      message: error.errmsg,
+      message: error.message,
       duration: 1.5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
 );
 

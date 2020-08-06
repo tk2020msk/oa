@@ -1,20 +1,37 @@
 <template>
-  <div id="app">
-    <transition :name="transitionName">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <router-view class="router"></router-view>
-      </keep-alive>
-      <router-view class="router" v-else></router-view>
-    </transition>
+  <div id="app" style="position: relative;height: 100%;">
+    <div class="loadingWrap" v-if="showLoading">
+      <van-loading size="24px" vertical>加载中...</van-loading>
+    </div>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive" :changeLoading="changeLoading"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" :changeLoading="changeLoading"></router-view>
   </div>
 </template>
 
 <script>
+import { Loading } from "vant";
 export default {
   name: "app",
-  computed: {
-    transitionName() {
-      return this.$store.state.direction;
+  data() {
+    return {
+      showLoading: false
+    };
+  },
+  components: {
+    [Loading.name]: Loading
+  },
+  watch: {
+    $route(to, from) {
+      // if(from.path == "/addvisit" && to.path != "/addvisit/detail"){
+      //   sessionStorage.removeItem('visitState');
+      // }
+    }
+  },
+  methods: {
+    changeLoading(state) {
+      this.showLoading = state;
     }
   }
 };
@@ -28,16 +45,10 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.loadingWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 </style>

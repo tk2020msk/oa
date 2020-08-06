@@ -13,11 +13,11 @@
       <van-cell title="访客车牌" :value="plateNumber" />
       <van-cell title="到访时间" :value="visitTime" />
     </div>
-    <div style="margin: 16px;">
-      <van-button round block type="info" @click="jumpUrl(1)">变更邀请</van-button>
+    <div style="margin: 16px;" v-if="visitStatus == 0">
+      <van-button round block type="info" @click="jumpUrl(false)">变更邀请</van-button>
     </div>
     <div style="margin: 16px;">
-      <van-button round block type="info" @click="jumpUrl(2)">再次邀请</van-button>
+      <van-button round block type="info" @click="jumpUrl(true)">再次邀请</van-button>
     </div>
   </div>
 </template>
@@ -25,19 +25,21 @@
 <script>
 import { Button, Cell } from "vant";
 import { mapMutations } from "vuex";
-import {subscribeDetail} from "@/api/addvisit";
+import { subscribeDetail } from "@/api/addvisit";
 export default {
   data() {
     return {
-      visitId:0,
+      visitId: 0,
       visitName: "",
       visitPhone: "",
       reception: "",
       visitCount: "",
       plateNumber: "",
-      visitTime: ""
+      visitTime: "",
+      visitStatus: 0
     };
   },
+  props: ["changeLoading"],
   components: {
     [Button.name]: Button,
     [Cell.name]: Cell
@@ -46,8 +48,9 @@ export default {
     ...mapMutations("addvisit", ["merge"]),
     jumpUrl(type) {
       this.merge({
-        currentBar:0,
-        editId:this.visitId
+        currentBar: 0,
+        visitId: this.visitId,
+        visitType: type
       });
       this.$router.go(-1);
     }
@@ -56,16 +59,23 @@ export default {
     let id = this.$route.query.id;
     let jobNumber = this.$store.state.jobNumber;
     this.visitId = id;
+    this.changeLoading(true);
 
-    subscribeDetail({id,jobNumber}).then(res=>{
-      let result = res.data;
-      this.visitName = result.userName;
-      this.visitPhone = result.mobile;
-      this.reception = result.addr;
-      this.visitCount = result.visitNum;
-      this.plateNumber = result.carNo;
-      this.visitTime = result.visitTime;
-    });
+    subscribeDetail({ id, jobNumber })
+      .then(res => {
+        let result = res.data;
+        this.visitName = result.userName;
+        this.visitPhone = result.mobile;
+        this.reception = result.addr;
+        this.visitCount = result.visitNum;
+        this.plateNumber = result.carNo;
+        this.visitTime = result.visitTime;
+        this.visitStatus = result.status; //0 未到访 1 已到访
+        this.changeLoading(false);
+      })
+      .catch(() => {
+        this.changeLoading(false);
+      });
   }
 };
 </script>
